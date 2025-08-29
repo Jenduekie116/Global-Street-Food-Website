@@ -1,0 +1,59 @@
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #ffd700;
+    }
+    #results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .meal-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+      position: relative;
+    }
+    .meal-card:hover {
+      transform: scale(1.03);
+    }
+    .meal-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .meal-card h3 {
+      margin: 0;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .meal-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .star-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ffd700;
+      z-index: 2;
+    }
+    #message {
+      text-align: center;
+      padding: 1rem;
+      font-style: italic;
+    }

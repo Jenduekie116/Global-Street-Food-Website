@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Starred Foods — Global Street Food</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="starred.css">
+</head>
+
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <img src="image/search.png" alt="Search Icon" class="search-icon">
+      <input type="text" placeholder="Search ...">
+    </div>
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="image/logo.png" alt="Global Street Food Logo">
+      <span class="logo-text">Global Street Food</span>
+    </div>
+
+    <!-- User Section -->
+    <div class="user-section">
+      <span class="login-text">Log in</span>
+      <img src="image/user.png" alt="User Icon" class="user-icon">
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="destination.html">Destination</a>
+    <a href="ingredient.html">Ingredient</a>
+    <a href="starred.html">Saved food</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <header>
+    <h1>★ Your Starred Foods</h1>
+    <p>All foods you've starred are listed below.</p>
+  </header>
+  <div id="message"></div>
+  <div id="results"></div>
+  <script>
+    function getStarredMeals() {
+      return JSON.parse(localStorage.getItem('starredMeals') || '[]');
+    }
+    function removeStar(id) {
+      let starred = getStarredMeals();
+      starred = starred.filter(m => m.idMeal !== id);
+      localStorage.setItem('starredMeals', JSON.stringify(starred));
+      renderMeals();
+    }
+    function getStarBtn(meal) {
+      const btn = document.createElement('button');
+      btn.className = 'star-btn';
+      btn.innerHTML = '★';
+      btn.title = 'Remove from starred';
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        removeStar(meal.idMeal);
+      };
+      return btn;
+    }
+    function renderMeals() {
+      const resultsDiv = document.getElementById("results");
+      const msg = document.getElementById("message");
+      const meals = getStarredMeals();
+      resultsDiv.innerHTML = "";
+
+      if (!meals.length) {
+        msg.textContent = "You haven't starred any foods yet.";
+        return;
+      }
+
+      msg.textContent = "";
+      meals.forEach(meal => {
+        const card = document.createElement("div");
+        card.className = "meal-card";
+        card.innerHTML = `
+      <a href="food.html?idMeal=${meal.idMeal}">
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+        <h3>${meal.strMeal}</h3>
+      </a>
+    `;
+        card.appendChild(getStarBtn(meal));
+        resultsDiv.appendChild(card);
+      });
+    }
+
+    renderMeals();
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Left navigation -->
+      <nav class="footer-nav">
+        <a href="about.html" class="footer-link">About us</a>
+        <a href="destination.html" class="footer-link">Site map</a>
+        <a href="privacy.html" class="footer-link">Privacy</a>
+        <a href="terms&condition.html" class="footer-link">Terms & conditions</a>
+      </nav>
+
+      <!-- Right copyright -->
+      <div class="footer-copy">
+        © 2025 Global Street Food - All Rights Reserved
+      </div>
+
+    </div>
+  </footer>
+</body>
+
+</html>

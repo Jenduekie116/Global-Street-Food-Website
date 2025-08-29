@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Street Food Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #ffcc00;
+    }
+
+    #results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .meal-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .meal-card:hover {
+      transform: scale(1.03);
+    }
+
+    .meal-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .meal-card h3 {
+      margin: 0;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .meal-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #message {
+      text-align: center;
+      padding: 1rem;
+      font-style: italic;
+    }
+
+    .star-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ffd700;
+      transition: transform 0.2s;
+      z-index: 2;
+    }
+
+    .star-btn.inactive {
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🍜 Street Food Explorer</h1>
+    <p id="country-name"></p>
+  </header>
+
+  <div id="message">Loading meals...</div>
+  <div id="results"></div>
+
+  <script>
+    // Get ?country= or ?ingredient= from URL
+    const params = new URLSearchParams(window.location.search);
+    const country = params.get("country");
+    const ingredient = params.get("ingredient");
+
+    function isStarred(id) {
+      const starred = JSON.parse(localStorage.getItem('starredMeals') || '[]');
+      return starred.some(m => m.idMeal === id);
+    }
+    function toggleStar(meal) {
+      let starred = JSON.parse(localStorage.getItem('starredMeals') || '[]');
+      if (isStarred(meal.idMeal)) {
+        starred = starred.filter(m => m.idMeal !== meal.idMeal);
+      } else {
+        starred.push(meal);
+      }
+      localStorage.setItem('starredMeals', JSON.stringify(starred));
+    }
+    function getStarBtn(meal) {
+      const btn = document.createElement('button');
+      btn.className = 'star-btn' + (isStarred(meal.idMeal) ? '' : ' inactive');
+      btn.innerHTML = isStarred(meal.idMeal) ? '★' : '☆';
+      btn.title = isStarred(meal.idMeal) ? 'Unstar' : 'Star';
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        toggleStar(meal);
+        btn.className = 'star-btn' + (isStarred(meal.idMeal) ? '' : ' inactive');
+        btn.innerHTML = isStarred(meal.idMeal) ? '★' : '☆';
+        btn.title = isStarred(meal.idMeal) ? 'Unstar' : 'Star';
+      };
+      return btn;
+    }
+    function renderMeals(meals) {
+      const resultsDiv = document.getElementById("results");
+      const msg = document.getElementById("message");
+      msg.textContent = "";
+      resultsDiv.innerHTML = "";
+      if (!meals) {
+        msg.textContent = "No meals found.";
+        return;
+      }
+      meals.forEach(meal => {
+        const card = document.createElement("div");
+        card.className = "meal-card";
+        card.innerHTML = `
+      <a href="../food.html?idMeal=${meal.idMeal}">
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+        <h3>${meal.strMeal}</h3>
+      </a>
+    `;
+        card.appendChild(getStarBtn(meal));
+        resultsDiv.appendChild(card);
+      });
+    }
+
+    if (country) {
+      document.getElementById("country-name").textContent =
+        `Showing street foods from: ${country}`;
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`)
+        .then(res => res.json())
+        .then(data => {
+          renderMeals(data.meals);
+        })
+        .catch(err => {
+          document.getElementById("message").textContent =
+            "Error loading meals. Please try again.";
+          console.error(err);
+        });
+    } else if (ingredient) {
+      document.getElementById("country-name").textContent =
+        `Showing street foods with ingredient: ${ingredient}`;
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)
+        .then(res => res.json())
+        .then(data => {
+          renderMeals(data.meals);
+        })
+        .catch(err => {
+          document.getElementById("message").textContent =
+            "Error loading meals. Please try again.";
+          console.error(err);
+        });
+    } else {
+      document.getElementById("country-name").textContent =
+        "No country or ingredient selected";
+    }
+  </script>
+</body>
+
+</html>

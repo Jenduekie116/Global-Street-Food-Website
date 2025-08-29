@@ -1,0 +1,45 @@
+      body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #fafafa;
+        }
+        header {
+            text-align: center;
+            padding: 1rem;
+            background: #e0f7fa;
+        }
+        #ingredient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+        }
+        .ingredient-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 1rem 0.5rem;
+        }
+        .ingredient-card:hover {
+            transform: scale(1.05);
+            background: #ffe082;
+        }
+        .ingredient-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+        .ingredient-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        #message {
+            text-align: center;
+            padding: 1rem;
+            font-style: italic;
+        }/* You can add custom styles here if needed. The main styles are in the HTML file. */

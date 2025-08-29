@@ -1,0 +1,53 @@
+/* Terms & Conditions Page Specific Styles */
+.terms-hero {
+    background: linear-gradient(rgba(60, 252, 255, 0.8), rgba(255, 111, 60, 0.8)), url('image/terms-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.terms-section {
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.terms-card {
+    background: #fffbe6;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    padding: 40px;
+}
+
+.terms-card h2 {
+    color: #ff6f3c;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.terms-card h2:first-child {
+    margin-top: 0;
+}
+
+.terms-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.terms-card ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.terms-card li {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 8px;
+}

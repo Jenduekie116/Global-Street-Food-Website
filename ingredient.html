@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sort by Ingredient — Global Street Food</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ingredient.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Topbar -->
+  <div class="topbar">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <img src="image/search.png" alt="Search Icon" class="search-icon">
+      <input type="text" placeholder="Search ...">
+    </div>
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="image/logo.png" alt="Global Street Food Logo">
+      <span class="logo-text">Global Street Food</span>
+    </div>
+
+    <!-- User Section -->
+    <div class="user-section">
+      <span class="login-text">Log in</span>
+      <img src="image/user.png" alt="User Icon" class="user-icon">
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="destination.html">Destination</a>
+    <a href="ingredient.html">Ingredient</a>
+    <a href="starred.html">Saved food</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+    <header>
+        <h1>🍅 Sort by Ingredient</h1>
+        <p>Click an ingredient to explore related street foods!</p>
+      <!-- Ingredient Search Bar -->
+      <div style="margin-top:1em;">
+        <input type="text" id="ingredientSearch" placeholder="Type an ingredient name..." style="padding:0.5em; width:220px;">
+        <button id="ingredientSearchBtn" style="padding:0.5em;">Search</button>
+        <span id="ingredientSearchError" style="color:red; margin-left:1em;"></span>
+      </div>
+    </header>
+    <div id="message">Loading ingredients...</div>
+    <div id="ingredient-grid"></div>
+    <script>
+      let allIngredients = [];
+      let filteredIngredients = [];
+      const grid = document.getElementById('ingredient-grid');
+      const msg = document.getElementById('message');
+
+      function renderIngredients(ingredients) {
+        grid.innerHTML = "";
+        if (!ingredients.length) {
+          msg.textContent = "No ingredients found.";
+          return;
+        }
+        msg.textContent = "";
+        ingredients.forEach(ingredient => {
+          const card = document.createElement('div');
+          card.className = 'ingredient-card';
+          card.innerHTML = `
+            <img src="https://www.themealdb.com/images/ingredients/${encodeURIComponent(ingredient.strIngredient)}.png" alt="${ingredient.strIngredient}">
+            <div class="ingredient-name">${ingredient.strIngredient}</div>
+          `;
+          card.onclick = () => {
+            window.location.href = `foods/search.html?ingredient=${encodeURIComponent(ingredient.strIngredient)}`;
+          };
+          grid.appendChild(card);
+        });
+      }
+
+      fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.meals) {
+            msg.textContent = "No ingredients found.";
+            return;
+          }
+          allIngredients = data.meals;
+          filteredIngredients = allIngredients;
+          renderIngredients(filteredIngredients);
+        })
+        .catch(err => {
+          msg.textContent = "Error loading ingredients.";
+          console.error(err);
+        });
+
+      document.getElementById('ingredientSearchBtn').onclick = function () {
+        const input = document.getElementById('ingredientSearch').value.trim();
+        const errorSpan = document.getElementById('ingredientSearchError');
+        errorSpan.textContent = "";
+        if (!input) {
+          filteredIngredients = allIngredients;
+          renderIngredients(filteredIngredients);
+          return;
+        }
+        // Case-insensitive filter
+        filteredIngredients = allIngredients.filter(ing => ing.strIngredient.toLowerCase().includes(input.toLowerCase()));
+        if (!filteredIngredients.length) {
+          errorSpan.textContent = "Ingredient not found.";
+        }
+        renderIngredients(filteredIngredients);
+      };
+
+      document.getElementById('ingredientSearch').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          document.getElementById('ingredientSearchBtn').click();
+        }
+      });
+    </script>
+
+       <!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    
+    <!-- Left navigation -->
+    <nav class="footer-nav">
+      <a href="about.html" class="footer-link">About us</a>
+        <a href="destination.html" class="footer-link">Site map</a>
+        <a href="privacy.html" class="footer-link">Privacy</a>
+        <a href="terms&condition.html" class="footer-link">Terms & conditions</a>
+    </nav>
+    
+    <!-- Right copyright -->
+    <div class="footer-copy">
+      © 2025 Global Street Food - All Rights Reserved
+    </div>
+
+  </div>
+</footer>
+</body>
+</html>

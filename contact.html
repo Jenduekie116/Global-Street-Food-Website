@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | Global Street Food</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Link to the CSS files -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="contact.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <img src="image/search.png" alt="Search Icon" class="search-icon">
+      <input type="text" placeholder="Search ...">
+    </div>
+
+    <!-- Logo -->
+    <div class="logo">
+      <a href="index.html" class="main-page">
+        <img src="image/logo.png" alt="Global Street Food Logo">
+        <span class="logo-text">Global Street Food</span>
+      </a>
+    </div>
+
+    <!-- User Section -->
+    <div class="user-section">
+      <a href="login.html" class="user-link">
+        <span class="login-text">Log in</span>
+        <img src="image/user.png" alt="User Icon" class="user-icon">
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="destination.html">Destination</a>
+    <a href="ingredient.html">Ingredient</a>
+    <a href="starred.html">Saved food</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="contact-hero">
+    <div class="hero-text">
+      <h1 class="display-4 fw-bold">Contact Us</h1>
+      <p class="lead">Have questions or suggestions? We'd love to hear from you!</p>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Success and Error Messages -->
+          <div id="successAlert" class="alert alert-success" role="alert">
+            Thank you for your message! We'll get back to you soon.
+          </div>
+          <div id="errorAlert" class="alert alert-danger" role="alert">
+            Please fill in all required fields correctly.
+          </div>
+          
+          <!-- Contact Form -->
+          <div class="contact-card">
+            <h2 class="mb-4">Send us a Message</h2>
+            <form id="contactForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name" class="form-label">Your Name *</label>
+                    <input type="text" class="form-control" id="name" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" class="form-control" id="email" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="subject" class="form-label">Subject *</label>
+                <input type="text" class="form-control" id="subject" required>
+              </div>
+              <div class="form-group">
+                <label for="message" class="form-label">Your Message *</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <div class="contact-info">
+            <h3>Contact Information</h3>
+            <div class="info-item">
+              <i>📞</i>
+              <div>
+                <h5>Phone</h5>
+                <p>+601 1234 5678</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i>✉️</i>
+              <div>
+                <h5>Email</h5>
+                <p>foodinfo@globalstreetfood.com</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i>🕒</i>
+              <div>
+                <h5>Business Hours</h5>
+                <p>Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm<br>Sunday: Closed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <nav class="footer-nav">
+        <a href="about.html" class="footer-link">About us</a>
+        <a href="destination.html" class="footer-link">Site map</a>
+        <a href="privacy.html" class="footer-link">Privacy</a>
+        <a href="terms&condition.html" class="footer-link">Terms & conditions</a>
+      </nav>
+      <div class="footer-copy">
+        © 2025 Global Street Food - All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle contact form submission
+      const contactForm = document.getElementById('contactForm');
+      const successAlert = document.getElementById('successAlert');
+      const errorAlert = document.getElementById('errorAlert');
+      
+      // Function to show alert
+      function showAlert(alertElement) {
+        alertElement.style.display = 'block';
+        setTimeout(() => {
+          alertElement.style.display = 'none';
+        }, 5000);
+      }
+      
+      // Contact form submission
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic validation
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        if (!name || !email || !subject || !message) {
+          showAlert(errorAlert);
+          return;
+        }
+        
+        // Save to localStorage 
+        const contactData = {
+          name,
+          email,
+          subject,
+          message,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Get existing contacts or initialize empty array
+        const existingContacts = JSON.parse(localStorage.getItem('contactSubmissions')) || [];
+        existingContacts.push(contactData);
+        localStorage.setItem('contactSubmissions', JSON.stringify(existingContacts));
+        
+        // Show success message
+        showAlert(successAlert);
+        
+        // Reset form
+        contactForm.reset();
+      });
+    });
+  </script>
+</body>
+
+</html>

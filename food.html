@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Food Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("image/background.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff5e6;
+      /* light warm color instead of plain white */
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 0.3rem 0;
+    }
+
+    .video {
+      margin-top: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="meal-name"></h1>
+    <img id="meal-img" src="" alt="">
+    <h2>Ingredients</h2>
+    <ul id="ingredients"></ul>
+    <div class="video">
+      <h2>Recipe Video</h2>
+      <div id="yt-video"></div>
+    </div>
+  </div>
+  <script>
+    // Get ?id= from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("idMeal");
+
+    if (id) {
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then(res => res.json())
+        .then(data => {
+          const meal = data.meals[0];
+          document.getElementById("meal-name").textContent = meal.strMeal;
+          document.getElementById("meal-img").src = meal.strMealThumb;
+          document.getElementById("meal-img").alt = meal.strMeal;
+
+          // Ingredients
+          const ul = document.getElementById("ingredients");
+          for (let i = 1; i <= 20; i++) {
+            const ingredient = meal[`strIngredient${i}`];
+            const measure = meal[`strMeasure${i}`];
+            if (ingredient && ingredient.trim()) {
+              const li = document.createElement("li");
+              li.textContent = `${ingredient} - ${measure}`;
+              ul.appendChild(li);
+            }
+          }
+
+          // YouTube video
+          if (meal.strYoutube) {
+            const ytId = meal.strYoutube.split("v=")[1];
+            document.getElementById("yt-video").innerHTML =
+              `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen></iframe>`;
+          } else {
+            document.getElementById("yt-video").textContent = "No video available.";
+          }
+        })
+        .catch(err => {
+          document.querySelector(".container").innerHTML = "Error loading meal details.";
+          console.error(err);
+        });
+    } else {
+      document.querySelector(".container").innerHTML = "No meal selected.";
+    }
+  </script>
+</body>
+
+</html>

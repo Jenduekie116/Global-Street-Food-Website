@@ -1,0 +1,53 @@
+/* Privacy Policy Page Specific Styles */
+.privacy-hero {
+    background: linear-gradient(rgba(102, 204, 109, 0.8), rgba(102, 153, 204, 0.8)), url('image/privacy-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.privacy-section {
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.privacy-card {
+    background: #e6f7ff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+}
+
+.privacy-card h2 {
+    color: #6699cc;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.privacy-card h2:first-child {
+    margin-top: 0;
+}
+
+.privacy-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.privacy-card ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.privacy-card li {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 8px;
+}

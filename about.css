@@ -1,0 +1,168 @@
+/* Reset */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Top Bar */
+.topbar {
+  margin: 0; 
+  padding: 10px 20px;
+}
+
+/* Navbar */
+.navbar {
+  margin: 0;
+
+}
+
+
+/* --- Section Titles --- */
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f9a825; /* golden yellow */
+  text-align: center;
+  margin: 60px 0 30px;
+}
+
+/* --- About Sections (About, Mission, Vision, Journey) --- */
+.about-section {
+  max-width: 1000px;
+  margin: 0 auto 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.about-section h2 {
+  font-size: 1.8rem;
+  color: #ff6f3c;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.about-section h2 span {
+  margin-right: 10px;
+}
+
+.about-section p,
+.about-section li {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.about-section ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/* Different background highlight for each */
+.about-section.about {
+  background: #fffbe6; /* light yellow */
+}
+
+.about-section.mission {
+  background: #ffe6e6; /* light red*/
+}
+
+.about-section.vision {
+  background: #e6f7ff; /* light blue */
+}
+
+.about-section.journey {
+  background: #f9e6ff; /* light purple */
+}
+
+/* --- Timeline (if used) --- */
+.timeline {
+  margin: 40px auto;
+  padding: 20px;
+  border-left: 3px solid #ff6f3c;
+  max-width: 800px;
+}
+
+.timeline-item {
+  margin: 20px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "●";
+  position: absolute;
+  left: -12px;
+  color: #f9a825; /* yellow dot */
+  font-size: 1.2rem;
+}
+
+.timeline-item h3 {
+  font-size: 1.2rem;
+  color: #ff6f3c;
+  margin-bottom: 8px;
+}
+
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word; /* ensures even spacing between words */
+}
+
+/* --- Footer --- */
+footer {
+  background: #ff6f3c;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 50px;
+}
+
+
+/* --- Team Section --- */
+.team-card {
+  background: #fff;
+  border-radius: 12px;      
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.team-photo-container {
+  display: inline-block;
+  padding: 4px;               
+  background: #ff6f3c;        /* orange border */
+  border-radius: 12px;        
+}
+
+/* Actual photo inside container */
+.team-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;         
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.team-photo:hover {
+  transform: scale(1.05);
+}
+
+/* Team text styling */
+.team-card h4 {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.team-card p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
